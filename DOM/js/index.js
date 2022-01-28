@@ -1,25 +1,47 @@
+//Задание 1
 const list = document.querySelector('.slider__list');
+const item = document.querySelector('.slider__item');
+const display = document.querySelector('.slider');
 const leftArrow = document.querySelector('.slider__arrow--left');
 const rightArrow = document.querySelector('.slider__arrow--right');
-const width = 100;
-const count = 8;
-const displayWidth = 300;
+
+// get width info
+commonStyle = getComputedStyle(list);
+commonWidth = parseInt(commonStyle.width);
+itemStyle = getComputedStyle(item);
+itemWidth = parseFloat(itemStyle.width) + parseFloat(itemStyle.borderWidth)*2;
+displayStyle = getComputedStyle(display);
+displayWidth = parseInt(displayStyle.width);
+
 
 let shift = 0;
 leftArrow.addEventListener('click', function(event) {
   event.preventDefault();
-  if (shift > - (count*width - displayWidth)) {shift -= width;}
+  if (shift > - (commonWidth - displayWidth)) {shift -= itemWidth;}
   list.style.transform = `translateX(${shift}px)`;
 });
 
 rightArrow.addEventListener('click', function(event) {
   event.preventDefault();
-  if (shift < 0) {shift += width;}
+  if (shift < 0) {shift += itemWidth;}
   list.style.transform = `translateX(${shift}px)`;
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key == 'ArrowLeft'){
+    if (shift > - (commonWidth - displayWidth)) {shift -= itemWidth;}
+    list.style.transform = `translateX(${shift}px)`;
+  } 
+  else if (event.key == 'ArrowRight'){
+    if (shift < 0) {shift += itemWidth;}
+    list.style.transform = `translateX(${shift}px)`;
+  }
+  console.log(event.key);
 });
 
 
 
+//Задание 2
 const btn = document.querySelector('.button');
 const task2 = document.querySelector('.task2');
 
@@ -49,6 +71,14 @@ btn.addEventListener('click', function(event) {
   task2.removeChild(overlay);
   task2.removeChild(modal);
   })
+  
+  document.addEventListener('keydown', function(event) {
+    if (event.key == 'Escape'){
+      task2.removeChild(overlay);
+      task2.removeChild(modal);
+    } 
+  })
+
 });
 
 
